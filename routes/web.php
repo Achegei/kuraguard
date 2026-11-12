@@ -551,3 +551,12 @@ Route::middleware([
     ])
     ->whereNumber('contestId')
     ->name('campaign.scenarios.index');
+
+// Authenticated, read-only geography for the campaign Scenario Builder.
+\Route::get(
+    '/campaigns/{contestId}/scenarios/geography',
+    [\App\Http\Controllers\CampaignScenarioGeographyController::class, 'index']
+)
+    ->middleware(['auth', 'can:campaign.view,contestId', 'throttle:60,1'])
+    ->whereNumber('contestId')
+    ->name('campaign.scenarios.geography');
