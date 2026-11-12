@@ -1,0 +1,121 @@
+
+/* KuraGuard Premium — Election Command Centre */
+:root {
+    --navy: #0b1730;
+    --navy-light: #172a49;
+    --green: #2563eb;
+    --blue: #2563eb;
+    --bg: #f3f6fb;
+    --text: #18263d;
+    --muted: #68778c;
+    --border: #e3e9f2;
+    --kg-navy: #0b1730;
+    --kg-navy-deep: #071125;
+    --kg-emerald: #2563eb;
+    --kg-canvas: #f3f6fb;
+    --kg-ink: #18263d;
+    --kg-muted: #68778c;
+    --kg-border: #e3e9f2;
+}
+html { -webkit-font-smoothing: antialiased; }
+body {
+    background: #f3f6fb;
+    color: #18263d;
+    font-family: Inter, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+}
+body.kg-campaign {
+    background: #f3f6fb;
+}
+body.kg-campaign .kg-sidebar,
+body.kg-campaign aside,
+body.kg-campaign .sidebar {
+    background: #0b1730;
+    color: #eaf0fa;
+}
+body.kg-campaign .kg-sidebar a,
+body.kg-campaign .sidebar a {
+    text-decoration: none;
+}
+body.kg-campaign .kg-nav-link {
+    border-radius: 9px;
+    transition: background .18s ease, color .18s ease;
+}
+body.kg-campaign .kg-nav-link:hover {
+    background: #172a49;
+}
+body.kg-campaign .kg-nav-link.active {
+    background: #233c62;
+    color: #fff;
+}
+body.kg-campaign main {
+    min-width: 0;
+}
+body.kg-campaign h1,
+body.kg-campaign h2,
+body.kg-campaign h3 {
+    color: #14243e;
+    letter-spacing: -.035em;
+}
+body.kg-campaign h1 {
+    font-weight: 760;
+}
+body.kg-campaign .panel,
+body.kg-campaign .card,
+body.kg-campaign .stat,
+body.kg-campaign .stat-card,
+body.kg-campaign .contest-info {
+    background: #fff;
+    border: 1px solid #e3e9f2;
+    border-radius: 14px;
+    box-shadow: 0 5px 22px rgba(11,23,48,.035);
+}
+body.kg-campaign .btn,
+body.kg-campaign button[type="submit"] {
+    background: #2563eb;
+    color: #fff;
+    border-radius: 9px;
+    transition: background .18s ease, transform .18s ease;
+}
+body.kg-campaign .btn:hover,
+body.kg-campaign button[type="submit"]:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+body.kg-campaign input:focus,
+body.kg-campaign select:focus,
+body.kg-campaign textarea:focus {
+    outline: 2px solid rgba(37,99,235,.25);
+    outline-offset: 1px;
+    border-color: #2563eb;
+}
+body.kg-campaign table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+body.kg-campaign th {
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    background: #f8fafd;
+}
+body.kg-campaign td,
+body.kg-campaign th {
+    border-bottom: 1px solid #edf1f6;
+}
+body.kg-campaign tbody tr:hover {
+    background: #f8faff;
+}
+body.kg-campaign a {
+    text-underline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+    body.kg-campaign *,
+    body.kg-campaign *::before,
+    body.kg-campaign *::after {
+        transition: none !important;
+    }
+}

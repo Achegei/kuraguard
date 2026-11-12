@@ -1,0 +1,221 @@
+
+:root {
+    --kg-navy: #0b1730;
+    --kg-blue: #2563eb;
+    --kg-surface: #f3f6fb;
+    --kg-text: #17243d;
+}
+
+.kg-public,
+.kg-auth {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--kg-surface);
+    color: var(--kg-text);
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+}
+
+.kg-public-header,
+.kg-auth-header {
+    background: var(--kg-navy);
+    color: white;
+}
+
+.kg-public-nav {
+    max-width: 1320px;
+    margin: auto;
+    padding: 20px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+
+.kg-public-brand {
+    color: white;
+    text-decoration: none;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.kg-public-brand span {
+    color: #60a5fa;
+}
+
+.kg-public-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 28px;
+}
+
+.kg-public-links a,
+.kg-auth-header a {
+    color: #dbe7ff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.kg-public-links a:hover,
+.kg-auth-header a:hover {
+    color: white;
+}
+
+.kg-public-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 28px 32px;
+    background: var(--kg-navy);
+    color: #b8c9e7;
+    font-size: 13px;
+}
+
+.kg-auth-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 36px;
+}
+
+.kg-auth-main {
+    max-width: 520px;
+    margin: 64px auto;
+    padding: 0 20px;
+}
+
+.kg-campaign-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+.kg-campaign-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.kg-workspace-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 17px 34px;
+    border-bottom: 1px solid #e1e8f2;
+    background: white;
+}
+
+.kg-workspace-topbar-label {
+    font-size: 13px;
+    color: #63758e;
+}
+
+.kg-workspace-topbar-user {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.kg-workspace-main {
+    padding: 32px;
+}
+
+@media (max-width: 760px) {
+    .kg-public-nav,
+    .kg-public-links,
+    .kg-public-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .kg-public-nav {
+        padding: 20px;
+    }
+
+    .kg-public-links {
+        gap: 16px;
+    }
+
+    .kg-workspace-topbar {
+        padding: 16px 20px;
+    }
+
+    .kg-workspace-main {
+        padding: 20px;
+    }
+}
+
+
+/* KURAGUARD SHARED CAMPAIGN LAYOUT STABILIZATION */
+
+:root {
+    --kg-workspace-sidebar-width: 267px;
+}
+
+body.kg-campaign {
+    margin: 0;
+    min-height: 100vh;
+}
+
+body.kg-campaign .kg-campaign-shell {
+    display: grid;
+    grid-template-columns:
+        var(--kg-workspace-sidebar-width) minmax(0, 1fr);
+    min-height: 100vh;
+    width: 100%;
+    align-items: stretch;
+}
+
+body.kg-campaign .kg-campaign-shell > .kg-unified-sidebar {
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    margin: 0;
+    padding: 24px;
+    align-self: stretch;
+    background: #0b1730;
+}
+
+body.kg-campaign .kg-campaign-shell > .kg-unified-sidebar .kg-nav-link {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+}
+
+body.kg-campaign .kg-campaign-content {
+    box-sizing: border-box;
+    min-width: 0;
+    width: 100%;
+    margin: 0;
+}
+
+body.kg-campaign .kg-workspace-topbar {
+    box-sizing: border-box;
+    min-height: 54px;
+    width: 100%;
+}
+
+body.kg-campaign main.kg-workspace-main {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 32px;
+}
+
+@media (max-width: 900px) {
+    body.kg-campaign .kg-campaign-shell {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    body.kg-campaign .kg-campaign-shell > .kg-unified-sidebar {
+        width: 100%;
+        padding: 20px;
+    }
+
+    body.kg-campaign main.kg-workspace-main {
+        padding: 20px;
+    }
+}

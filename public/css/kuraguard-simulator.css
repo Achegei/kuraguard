@@ -1,0 +1,299 @@
+/* KURAGUARD SCENARIO SIMULATOR V1 */
+
+.kg-simulator {
+    margin-top: 30px;
+    padding: 30px;
+    background: linear-gradient(145deg, #14223e, #0b1730);
+    border: 1px solid #344568;
+    border-radius: 22px;
+    color: #edf2ff;
+}
+
+.kg-sim-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.kg-sim-eyebrow {
+    color: #b4a7ff;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .14em;
+}
+
+.kg-sim-heading h2 {
+    margin: 12px 0;
+    font-size: clamp(24px, 3vw, 34px);
+}
+
+.kg-sim-heading p,
+.kg-sim-help {
+    color: #aebed7;
+    line-height: 1.7;
+}
+
+.kg-sim-tag {
+    white-space: nowrap;
+    padding: 9px 13px;
+    border-radius: 30px;
+    background: #302c61;
+    border: 1px solid #6f65c5;
+    color: #ddd7ff;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.kg-sim-steps {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+    margin: 28px 0;
+}
+
+.kg-sim-steps span {
+    padding: 12px 8px;
+    text-align: center;
+    background: #1c2b4b;
+    border: 1px solid #344568;
+    border-radius: 10px;
+    font-size: 12px;
+    color: #cbd6f2;
+    font-weight: 700;
+}
+
+.kg-sim-context {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.kg-sim-context > div,
+.kg-sim-projected,
+.kg-sim-metrics > div {
+    background: #1a2b4b;
+    border: 1px solid #354a6d;
+    border-radius: 13px;
+    padding: 18px;
+}
+
+.kg-sim-context small,
+.kg-sim-projected small,
+.kg-sim-metrics small {
+    display: block;
+    color: #a6b6d0;
+    font-size: 11px;
+    letter-spacing: .04em;
+    margin-bottom: 9px;
+}
+
+.kg-sim-context strong,
+.kg-sim-projected strong,
+.kg-sim-metrics strong {
+    display: block;
+    font-size: 24px;
+    color: #fff;
+    overflow-wrap: anywhere;
+}
+
+.kg-sim-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: 20px;
+}
+
+.kg-sim-controls,
+.kg-sim-results {
+    background: #101d36;
+    border: 1px solid #344568;
+    border-radius: 16px;
+    padding: 24px;
+    min-width: 0;
+}
+
+.kg-sim-controls h3,
+.kg-sim-results h3 {
+    margin: 0 0 22px;
+    color: #fff;
+}
+
+.kg-sim-controls label {
+    color: #dbe5ff;
+    font-size: 13px;
+}
+
+.kg-sim-range-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 15px 0 20px;
+}
+
+.kg-sim-range-row input {
+    flex: 1;
+    min-width: 0;
+    accent-color: #9b8cff;
+}
+
+.kg-sim-range-row output {
+    font-size: 22px;
+    font-weight: 800;
+    min-width: 55px;
+    text-align: right;
+}
+
+.kg-sim-projected {
+    margin-bottom: 30px;
+}
+
+.kg-sim-help {
+    font-size: 13px;
+}
+
+.kg-sim-candidate {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 85px 30px;
+    gap: 9px;
+    align-items: center;
+    margin: 12px 0;
+}
+
+.kg-sim-candidate input {
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+    background: #172846;
+    color: #fff;
+    border: 1px solid #405478;
+    border-radius: 9px;
+    font: inherit;
+}
+
+.kg-sim-candidate button {
+    background: transparent;
+    color: #e6a7b7;
+    border: 0;
+    font-size: 21px;
+    cursor: pointer;
+}
+
+.kg-sim-add,
+.kg-sim-reset {
+    padding: 12px 15px;
+    border-radius: 10px;
+    font-weight: 750;
+    cursor: pointer;
+    margin-top: 14px;
+}
+
+.kg-sim-add {
+    color: #fff;
+    background: #5149b2;
+    border: 1px solid #9286ff;
+}
+
+.kg-sim-reset {
+    margin-left: 8px;
+    background: transparent;
+    color: #cbd6f0;
+    border: 1px solid #4b5d7d;
+}
+
+.kg-sim-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.kg-sim-chart {
+    margin-top: 27px;
+}
+
+.kg-sim-bar-item {
+    margin: 20px 0;
+}
+
+.kg-sim-bar-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 13px;
+    margin-bottom: 9px;
+}
+
+.kg-sim-bar-header strong {
+    color: #fff;
+}
+
+.kg-sim-bar-track {
+    height: 14px;
+    background: #273754;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.kg-sim-bar-fill {
+    height: 100%;
+    border-radius: inherit;
+    transition: width .2s;
+}
+
+.kg-sim-message {
+    margin-top: 20px;
+    color: #d9ddff;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.kg-sim-disclaimer {
+    margin-top: 25px;
+    padding: 17px;
+    background: #20294b;
+    border: 1px solid #485180;
+    border-radius: 11px;
+    color: #c3ceec;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+@media (max-width: 800px) {
+    .kg-sim-layout,
+    .kg-sim-context {
+        grid-template-columns: 1fr;
+    }
+
+    .kg-sim-heading {
+        flex-direction: column;
+    }
+
+    .kg-sim-steps {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .kg-simulator {
+        padding: 18px;
+    }
+
+    .kg-sim-controls,
+    .kg-sim-results {
+        padding: 16px;
+    }
+
+    .kg-sim-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .kg-sim-steps {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .kg-sim-bar-fill {
+        transition: none;
+    }
+}
