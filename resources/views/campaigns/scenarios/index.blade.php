@@ -590,7 +590,7 @@
             const voters = document.createElement('span');
             voters.className = 'scenario-centre-voters'; voters.textContent = format(centre.voters) + ' registered voters';
             label.append(checkbox, name, voters);
-            if (checkbox.disabled) {
+            if (owner !== undefined && owner !== activeCandidate) {
                 const ownerLabel = document.createElement('span');
                 ownerLabel.className = 'kg-multi-owner';
                 ownerLabel.textContent = 'Assigned to ' + candidateName(owner);
