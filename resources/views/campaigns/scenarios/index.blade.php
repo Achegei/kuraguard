@@ -343,6 +343,29 @@
 .kg-scenario .kg-multi-inline span{color:#aebce6;font-size:12px}
 @media(max-width:650px){.kg-scenario .kg-multi-row{grid-template-columns:1fr}}
 
+/* B2: progressive, scoped geography navigation */
+.kg-scenario .kg-geo-navigation{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin:18px 0}
+.kg-scenario .kg-geo-navigation label{min-width:200px;flex:1;margin:0}
+.kg-scenario .kg-geo-navigation select{display:block;width:100%;margin-top:8px;padding:12px;background:#142247;color:#fff;border:1px solid #56679e;border-radius:11px;font:inherit}
+.kg-scenario .kg-geo-pages{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0}
+.kg-scenario .kg-geo-pages button{padding:9px 15px;background:#25366e;color:#fff;border:1px solid #56679e;border-radius:9px;cursor:pointer}
+.kg-scenario .kg-geo-pages button:disabled{opacity:.45;cursor:not-allowed}
+.kg-scenario .kg-geo-warning{color:#fde68a;font-size:12px;margin:10px 0}
+.kg-scenario .kg-geo-area-grid{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0}
+.kg-scenario .kg-geo-area-card{width:100%;text-align:left;background:#142247;color:#edf2ff;border:1px solid #344372;border-radius:13px;padding:17px;min-height:110px;cursor:pointer;display:flex;flex-direction:column;gap:9px;font:inherit}
+.kg-scenario .kg-geo-area-card:hover,.kg-scenario .kg-geo-area-card:focus-visible{border-color:#a5b4fc;background:#25366e;outline-offset:2px}
+.kg-scenario .kg-geo-area-card strong{font-size:14px;line-height:1.45}
+.kg-scenario .kg-geo-area-card span{font-size:12px;color:#b7c6ec}
+.kg-scenario .kg-geo-area-card small{font-size:11px;color:#fde68a}
+@media(max-width:1050px){.kg-scenario .kg-geo-area-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.kg-scenario .kg-geo-area-grid{grid-template-columns:1fr}}
+/* C2 separate geographic actions */
+.kg-scenario .kg-geo-area-card{cursor:default}
+.kg-scenario .kg-c2-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.kg-scenario .kg-c2-actions button,.kg-scenario .kg-c2-assign{padding:9px 11px;border-radius:9px;border:1px solid #6475ac;color:#fff;background:#283b75;cursor:pointer;font:inherit;font-size:12px}
+.kg-scenario .kg-c2-actions .kg-c2-assign{background:#4338ca}
+.kg-scenario .scenario-centre-card{cursor:default}
+.kg-scenario .scenario-centre-card .kg-c2-assign{grid-column:2;grid-row:4;justify-self:start}
 </style>
 @endpush
 
@@ -401,14 +424,17 @@
 
     <section class="scenario-panel" id="scenario-geography" data-scenario-stage="2">
         <h2>Assign geographic areas</h2>
-        <p class="help">Choose a candidate and tick centres to assign them. Untick any of their centres to return them to Unassigned. To transfer a centre from another candidate, tick it and confirm the reassignment. Every centre can belong to only one group.</p>
+        <p class="help">Choose a candidate, then Assign an area or Explore its smaller geographic units. More specific assignments override inherited ownership. Removing an assignment restores inherited ownership where applicable.</p>
         <div class="kg-multi-picker"><label for="kg-active-candidate">Assign areas to</label><select id="kg-active-candidate"></select></div>
         <div class="results-grid" style="margin:18px 0">
-            <div class="metric"><span>Centres assigned to selected candidate</span><strong id="kg-selected-count">0</strong></div>
+            <div class="metric"><span>Direct areas assigned to selected candidate</span><strong id="kg-selected-count">0</strong></div>
             <div class="metric"><span>Registered voters in selected candidate's areas</span><strong id="kg-selected-voters">0</strong></div>
         </div>
-        <div id="scenario-geography-status" class="help">Loading electoral geography...</div>
+        <div id="kg-geo-navigation" class="kg-geo-navigation" aria-label="Geographic navigation"></div>
+        <div id="scenario-geography-status" class="help" role="status" aria-live="polite">Loading electoral geography...</div>
+        <div id="kg-geo-warning" class="kg-geo-warning" role="status" aria-live="polite"></div>
         <div id="scenario-geography-list" class="scenario-centre-grid"></div>
+        <div id="kg-geo-pages" class="kg-geo-pages"></div>
         <p class="notice">Assigning a polling centre does not mean its voters support the named candidate. All figures are historical registered-voter counts.</p>
     </section>
 
@@ -420,7 +446,7 @@
             <div class="metric"><span>Unassigned registered voters</span><strong id="kg-review-unassigned">—</strong></div>
         </div>
         <div id="kg-review-list" class="kg-multi-list" style="margin-top:18px"></div>
-        <p class="notice" id="kg-coverage-notice">Unassigned voters include all voters outside selected centres and any difference between the source reference totals and centre-level data.</p>
+        <p class="notice" id="kg-coverage-notice">Unassigned voters include unallocated geographic areas and any uncovered historical register remainder.</p>
     </section>
 
     <section class="scenario-panel" data-scenario-stage="4">
@@ -454,11 +480,13 @@
 @endsection
 
 @push('scripts')
+<script src="{{ asset('js/kuraguard-hierarchical-engine.js') }}"></script>
 <script>
 (() => {
     'use strict';
     const office = @json($contest->office);
-    const wardId = @json($contest->ward_id);
+    const geographyUrl = @json(route('campaign.scenarios.geography', ['contestId' => $contest->id]));
+    const campaignDatasetId = Number(@json($contest->electoral_dataset_id));
     const campaignName = @json($contest->display_name);
     const scopeVoters = Number(@json($scope['statistics']['registered_voters']));
     const list = document.getElementById('kg-multi-candidate-list');
@@ -481,24 +509,68 @@
         candidates.push({id:candidates.length + 1, name:String(competitor.name), source:'registered', contestId:Number(competitor.contest_id)});
     }
     const centres = new Map();
-    const assignments = new Map();
+    if (!window.KuraGuardGeography) throw new Error('C2 geography engine unavailable');
+    const {GeographicAssignmentEngine, keyOf} = window.KuraGuardGeography;
+    const engine = new GeographicAssignmentEngine({scopeVoters, rootLevel:
+        office === 'president' ? 'county' :
+        ['governor','senator','woman_representative'].includes(office) ? 'constituency' :
+        office === 'mp' ? 'ward' : 'polling_centre'});
+    const assignments = engine.assignments;
     let candidateSequence = candidates.length;
     let activeCandidate = 1;
     let activeStage = 0;
     let geographyReady = false;
+    const geographyNav = document.getElementById('kg-geo-navigation');
+    const geographyPages = document.getElementById('kg-geo-pages');
+    const geographyWarning = document.getElementById('kg-geo-warning');
+    const levels = office === 'president' ? ['county','constituency','ward','polling_centre'] :
+        ['governor','senator','woman_representative'].includes(office) ? ['constituency','ward','polling_centre'] :
+        office === 'mp' ? ['ward','polling_centre'] : ['polling_centre'];
+    const selectedParents = new Map();
+    let currentLevelIndex = 0;
+    let currentPage = 1;
+    let currentRows = [];
+    let currentMeta = null;
+    let loadSequence = 0;
+    let currentLoading = false;
+    let incompleteCentres = new Set();
 
     function candidateName(id) {
         const c = candidates.find(item => item.id === id);
         return c ? (c.name.trim() || ('Candidate ' + id)) : 'Unassigned';
     }
     function totals() {
-        const result = new Map(candidates.map(c => [c.id, {count:0, voters:0}]));
-        for (const [centreId, candidateId] of assignments) {
-            const centre = centres.get(centreId);
-            const total = result.get(candidateId);
-            if (centre && total) { total.count++; total.voters += centre.voters; }
-        }
+        const coverage = engine.totals();
+        const result = new Map(candidates.map(c => [c.id, {count:0, voters:Number(coverage.candidates[c.id] || 0)}]));
+        for (const [key, id] of assignments) if (result.has(id)) result.get(id).count++;
         return result;
+    }
+    function parentKeyFor(level) {
+        const index = levels.indexOf(level);
+        return index > 0 ? keyOf(levels[index - 1], selectedParents.get(levels[index - 1])) : null;
+    }
+    function registerArea(item, level) {
+        const id = Number(item.id), voters = Number(item.registered_voters);
+        if (!Number.isSafeInteger(id) || id < 1 || !Number.isSafeInteger(voters) || voters < 0) {
+            throw new Error('Invalid geographic register record');
+        }
+        return engine.addArea({level, id, parentKey:parentKeyFor(level),
+            registeredVoters:voters, registerComplete:Boolean(item.register_complete)});
+    }
+    function effectiveOwner(key) { return engine.ownerOf(key); }
+    function applyAssignment(key, name) {
+        const direct = assignments.get(key);
+        const previous = effectiveOwner(key);
+        if (direct === activeCandidate) {
+            engine.unassign(key);
+        } else {
+            if (previous !== null && previous !== activeCandidate) {
+                if (!window.confirm('Reassign "' + name + '" from ' + candidateName(previous) +
+                    ' to ' + candidateName(activeCandidate) + '? This is a hypothetical allocation.')) return;
+            }
+            engine.assign(key, activeCandidate);
+        }
+        renderGeographyNavigation(); renderGeography(); renderSummaries();
     }
     function renderCandidates() {
         list.replaceChildren();
@@ -528,9 +600,7 @@
                 const remove = document.createElement('button');
                 remove.type = 'button'; remove.textContent = 'Remove';
                 remove.addEventListener('click', () => {
-                    for (const [id, owner] of assignments) {
-                        if (owner === candidate.id) assignments.delete(id);
-                    }
+                    engine.removeCandidate(candidate.id);
                     candidates.splice(candidates.findIndex(c => c.id === candidate.id), 1);
                     if (activeCandidate === candidate.id) activeCandidate = 1;
                     renderCandidates(); renderGeography(); renderSummaries();
@@ -567,7 +637,12 @@
         renderCandidates();
     });
     picker.addEventListener('change', () => {
-        activeCandidate = Number(picker.value);
+        const selectedId = Number(picker.value);
+        if (!candidates.some(candidate => candidate.id === selectedId)) return;
+        activeCandidate = selectedId;
+        // Non-centre cards are rendered by the navigation renderer, not renderGeography().
+        // Refresh both card types so Assign labels and callbacks use the selected aspirant.
+        renderGeographyNavigation();
         renderGeography();
     });
     function renderGeography() {
@@ -575,42 +650,31 @@
         const candidateTotal = totals().get(activeCandidate) || {count:0,voters:0};
         set('kg-selected-count', format(candidateTotal.count));
         set('kg-selected-voters', format(candidateTotal.voters));
-        for (const centre of centres.values()) {
-            const owner = assignments.get(centre.id);
-            const label = document.createElement('label');
-            label.className = 'scenario-centre-card';
-            if (owner === activeCandidate) label.classList.add('is-selected');
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox'; checkbox.className = 'scenario-centre-checkbox';
-            checkbox.checked = owner === activeCandidate;
-            checkbox.disabled = false;
-            if (owner !== undefined && owner !== activeCandidate) label.classList.add('is-other-assigned');
+        if (levels[currentLevelIndex] !== 'polling_centre') return;
+        for (const item of currentRows) {
+            const centre = centres.get(Number(item.id));
+            if (!centre) continue;
+            const key = keyOf('polling_centre', centre.id);
+            const owner = effectiveOwner(key), direct = assignments.get(key);
+            const card = document.createElement('div');
+            card.className = 'scenario-centre-card';
+            if (owner === activeCandidate) card.classList.add('is-selected');
+            if (owner !== null && owner !== activeCandidate) card.classList.add('is-other-assigned');
             const name = document.createElement('span');
             name.className = 'scenario-centre-name'; name.textContent = centre.name;
             const voters = document.createElement('span');
-            voters.className = 'scenario-centre-voters'; voters.textContent = format(centre.voters) + ' registered voters';
-            label.append(checkbox, name, voters);
-            if (owner !== undefined && owner !== activeCandidate) {
-                const ownerLabel = document.createElement('span');
-                ownerLabel.className = 'kg-multi-owner';
-                ownerLabel.textContent = 'Assigned to ' + candidateName(owner);
-                label.append(ownerLabel);
-                label.title = 'Click to transfer from ' + candidateName(owner) + ' to ' + candidateName(activeCandidate);
-            }
-            checkbox.addEventListener('change', () => {
-                const previousOwner = assignments.get(centre.id);
-                if (checkbox.checked && previousOwner !== undefined && previousOwner !== activeCandidate) {
-                    const message = 'Move "' + centre.name + '" from ' + candidateName(previousOwner) + ' to ' + candidateName(activeCandidate) + '? This changes only the hypothetical geographic assignment.';
-                    if (!window.confirm(message)) {
-                        renderGeography();
-                        return;
-                    }
-                }
-                if (checkbox.checked) assignments.set(centre.id, activeCandidate);
-                else if (previousOwner === activeCandidate) assignments.delete(centre.id);
-                renderGeography(); renderSummaries();
-            });
-            geographyList.append(label);
+            voters.className = 'scenario-centre-voters';
+            voters.textContent = format(centre.voters) + ' registered voters' +
+                (incompleteCentres.has(centre.id) ? ' · incomplete register' : '');
+            const ownership = document.createElement('span');
+            ownership.className = 'kg-multi-owner';
+            ownership.textContent = owner === null ? 'Unassigned' :
+                'Assigned to ' + candidateName(owner) + (direct === undefined ? ' · inherited' : ' · direct');
+            const assign = makeNavButton(direct === activeCandidate ? 'Remove assignment' :
+                'Assign to ' + candidateName(activeCandidate), () => applyAssignment(key, centre.name));
+            assign.className = 'kg-c2-assign';
+            card.append(name, voters, ownership, assign);
+            geographyList.append(card);
         }
     }
     function makeSummaryRow(candidate, total, includeBar) {
@@ -619,7 +683,7 @@
         const heading = document.createElement('strong'); heading.textContent = candidateName(candidate.id);
         const detail = document.createElement('small');
         const percentage = scopeVoters > 0 ? (total.voters / scopeVoters * 100) : 0;
-        detail.textContent = format(total.count) + ' centres assigned · ' + percentage.toFixed(2) + '% of registered electorate';
+        detail.textContent = format(total.count) + ' direct areas assigned · ' + percentage.toFixed(2) + '% of registered electorate';
         content.append(heading, detail);
         if (includeBar) {
             const track = document.createElement('div'); track.className = 'kg-multi-result-bar';
@@ -634,7 +698,7 @@
         const perCandidate = totals();
         const assigned = [...perCandidate.values()].reduce((sum, t) => sum + t.voters, 0);
         set('kg-review-assigned', format(assigned));
-        const unassigned = Math.max(0, scopeVoters - assigned);
+        const unassigned = engine.totals().unassigned;
         set('kg-review-unassigned', format(unassigned));
         set('kg-result-unassigned', format(unassigned));
         set('kg-result-unassigned-share', scopeVoters > 0 ? (unassigned / scopeVoters * 100).toFixed(2) + '%' : 'N/A');
@@ -644,7 +708,7 @@
                 el.append(makeSummaryRow(candidate, perCandidate.get(candidate.id), includeBar));
             }
         }
-        const remainder = Math.max(0, scopeVoters - assigned);
+        const remainder = engine.totals().unassigned;
         for (const target of ['kg-review-list', 'kg-result-list']) {
             const container = document.getElementById(target);
             const row = document.createElement('div');
@@ -676,29 +740,129 @@
             note.textContent = 'Unassigned registered voters: ' + format(scopeVoters - assigned) + '. This is a geographic coverage remainder, not a voting preference.';
         }
     }
-    async function loadGeography() {
-        if (office !== 'mca' || !wardId) {
-            geographyStatus.textContent = 'Geographic assignments are currently supported for MCA ward campaigns only. Other offices require scoped geographic data integration.';
-            return;
+    function makeNavButton(text, action, disabled = false) {
+        const button = document.createElement('button');
+        button.type = 'button'; button.textContent = text; button.disabled = disabled;
+        button.addEventListener('click', action);
+        return button;
+    }
+    function renderGeographyNavigation() {
+        geographyNav.replaceChildren(); geographyPages.replaceChildren();
+        const level = levels[currentLevelIndex];
+        if (currentLevelIndex > 0) {
+            geographyNav.append(makeNavButton('← Back to ' + levels[currentLevelIndex - 1].replace('_',' '), () => {
+                currentLevelIndex--; currentPage = 1; loadGeography();
+            }));
         }
+        if (level !== 'polling_centre') {
+            const grid = document.createElement('div');
+            grid.className = 'kg-geo-area-grid';
+            grid.setAttribute('aria-label', 'Select ' + level.replace('_', ' '));
+            for (const item of currentRows) {
+                const card = document.createElement('div');
+                card.className = 'kg-geo-area-card';
+                const key = keyOf(level, Number(item.id));
+                const owner = effectiveOwner(key), direct = assignments.get(key);
+                const name = document.createElement('strong');
+                name.textContent = String(item.name || 'Unnamed area');
+                const voters = document.createElement('span');
+                voters.textContent = format(Number(item.registered_voters)) + ' historical registered voters';
+                const ownership = document.createElement('span');
+                ownership.textContent = owner === null ? 'Unassigned' :
+                    'Assigned to ' + candidateName(owner) + (direct === undefined ? ' · inherited' : ' · direct');
+                const actions = document.createElement('div'); actions.className = 'kg-c2-actions';
+                const assign = makeNavButton(direct === activeCandidate ? 'Remove assignment' :
+                    'Assign to ' + candidateName(activeCandidate), () => applyAssignment(key, String(item.name)));
+                assign.className = 'kg-c2-assign';
+                const explore = makeNavButton('Explore ' + levels[currentLevelIndex + 1].replace('_', ' ') + 's →', () => {
+                    const id = Number(item.id);
+                    if (!Number.isSafeInteger(id) || id < 1) return;
+                    selectedParents.set(level, id);
+                    for (const later of levels.slice(currentLevelIndex + 1)) selectedParents.delete(later);
+                    currentLevelIndex++; currentPage = 1; loadGeography();
+                });
+                explore.className = 'kg-c2-explore';
+                actions.append(assign, explore);
+                card.append(name, voters, ownership, actions);
+                if (!item.register_complete) {
+                    const warning = document.createElement('small');
+                    warning.textContent = 'Incomplete historical register'; card.append(warning);
+                }
+                grid.append(card);
+            }
+            geographyNav.append(grid);
+        }
+        if (currentMeta) {
+            const pageLabel = document.createElement('span');
+            pageLabel.textContent = 'Page ' + currentMeta.page + ' of ' + currentMeta.last_page +
+                ' · ' + format(currentMeta.total) + ' ' + level.replace('_',' ') + ' records';
+            geographyPages.append(
+                makeNavButton('Previous', () => { currentPage--; loadGeography(); }, currentLoading || currentPage <= 1),
+                pageLabel,
+                makeNavButton('Next', () => { currentPage++; loadGeography(); }, currentLoading || !currentMeta.has_more_pages)
+            );
+        }
+    }
+    async function loadGeography() {
+        const sequence = ++loadSequence;
+        const level = levels[currentLevelIndex];
+        const parentLevel = levels[currentLevelIndex - 1];
+        const parentId = currentLevelIndex > 0 ? selectedParents.get(parentLevel) : null;
+        currentLoading = true; geographyReady = false; currentRows = []; currentMeta = null;
+        geographyList.replaceChildren(); geographyPages.replaceChildren();
+        geographyStatus.textContent = 'Loading ' + level.replace('_',' ') + ' records...';
+        geographyWarning.textContent = '';
+        renderGeographyNavigation();
         try {
-            const response = await fetch('/explorer/api/polling-centres?ward_id=' + encodeURIComponent(wardId), {credentials:'same-origin'});
+            const params = new URLSearchParams({level, page:String(currentPage)});
+            if (parentId !== null && parentId !== undefined) params.set('parent_id', String(parentId));
+            const response = await fetch(geographyUrl + '?' + params.toString(), {
+                credentials:'same-origin', headers:{'Accept':'application/json'}
+            });
             if (!response.ok) throw new Error('HTTP ' + response.status);
             const payload = await response.json();
-            const records = Array.isArray(payload) ? payload : (payload.data || payload.polling_centres || []);
-            if (!Array.isArray(records)) throw new Error('Unexpected electoral API response');
-            for (const item of records) {
-                const id = Number(item.id), voters = Number(item.registered_voters);
-                if (!Number.isSafeInteger(id) || id <= 0 || !Number.isSafeInteger(voters) || voters < 0 || centres.has(id)) {
-                    throw new Error('Invalid or duplicate centre reference');
-                }
-                centres.set(id, {id, name:String(item.name || ('Centre #' + id)), voters});
+            if (sequence !== loadSequence) return;
+            if (!payload || !Array.isArray(payload.data) || !payload.meta ||
+                payload.meta.level !== level || Number(payload.meta.dataset_id) !== campaignDatasetId) {
+                throw new Error('Unexpected campaign geography response');
             }
-            geographyReady = true;
-            geographyStatus.textContent = format(centres.size) + ' polling centres available.';
-            renderGeography(); renderSummaries();
+            // Register each page with its validated campaign-scoped parent.
+            // A parent is registered when its card is loaded before exploration.
+            for (const item of payload.data) registerArea(item, level);
+            currentRows = payload.data;
+            currentMeta = payload.meta;
+            if (level === 'polling_centre') {
+                for (const item of currentRows) {
+                    const id = Number(item.id), voters = Number(item.registered_voters);
+                    if (!Number.isSafeInteger(id) || id <= 0 || !Number.isSafeInteger(voters) || voters < 0) {
+                        throw new Error('Invalid polling-centre data');
+                    }
+                    const existing = centres.get(id);
+                    if (existing && (existing.voters !== voters || existing.name !== String(item.name))) {
+                        throw new Error('Inconsistent polling-centre data');
+                    }
+                    centres.set(id, {id, name:String(item.name), voters});
+                    if (!item.register_complete) incompleteCentres.add(id);
+                    else incompleteCentres.delete(id);
+                }
+                geographyReady = true;
+                const incomplete = currentRows.filter(item => !item.register_complete).length;
+                geographyWarning.textContent = incomplete ?
+                    incomplete + ' centre(s) on this page have incomplete or absent station register snapshots. Displayed registered-voter totals may be understated.' : '';
+                geographyStatus.textContent = format(currentRows.length) + ' polling centres on this page · ' +
+                    format(centres.size) + ' distinct centres loaded in this session. Assignments persist when navigating.';
+            } else {
+                geographyReady = true;
+                geographyStatus.textContent = 'Assign an area directly, or explore its smaller geographic units.';
+            }
+            currentLoading = false;
+            renderGeographyNavigation(); renderGeography(); renderSummaries();
         } catch (err) {
-            geographyStatus.textContent = 'Unable to load polling centres: ' + err.message;
+            if (sequence !== loadSequence) return;
+            currentLoading = false; geographyReady = false; currentRows = []; currentMeta = null;
+            geographyStatus.textContent = 'Unable to load geographic records: ' + err.message;
+            geographyNav.replaceChildren(); geographyPages.replaceChildren(); geographyList.replaceChildren();
+            geographyNav.append(makeNavButton('Retry', () => loadGeography()));
         }
     }
     function showStage(stage) {
@@ -718,8 +882,8 @@
     back.addEventListener('click', () => showStage(activeStage - 1));
     next.addEventListener('click', () => {
         if (activeStage === 4) { showStage(0); return; }
-        if (activeStage === 2 && !geographyReady) {
-            geographyStatus.textContent = 'Cannot proceed until geographic data loads successfully.';
+        if (activeStage === 2 && (!geographyReady || currentLoading)) {
+            geographyStatus.textContent = 'Wait for geographic records to finish loading before continuing.';
             return;
         }
         showStage(activeStage + 1);
