@@ -175,3 +175,11 @@
     font-size: 35px !important;
   }
 }
+
+/* Step 160G: mobile hamburger safe-edge alignment */
+@media (max-width: 1100px) {
+  body.kg-public .kg-public-nav > .kg-mobile-menu-toggle {
+    margin-right: 18px !important;
+    transform: translateX(-4px);
+  }
+}
