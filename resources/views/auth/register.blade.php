@@ -4,6 +4,8 @@
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/kuraguard-auth-experience.css') }}">
+<link rel="stylesheet" href="{{ asset('css/kuraguard-register-photo.css') }}?v=20261113a">
+    <link rel="stylesheet" href="{{ asset('css/kuraguard-auth-immersive-156.css') }}?v=20261114b">
 @endpush
 
 @section('content')

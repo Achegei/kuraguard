@@ -1,0 +1,151 @@
+
+/* KURAGUARD EXPLORER PHOTOGRAPHIC BACKGROUND 150C */
+
+/* The photograph is deliberately faint to protect readability. */
+body {
+    position: relative;
+    isolation: isolate;
+    background: #071023;
+    min-height: 100vh;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background-image: url('/images/home/agents.jpg');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: .13;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            ellipse at 85% 0%,
+            rgba(104, 74, 210, .16),
+            transparent 42%
+        ),
+        linear-gradient(
+            180deg,
+            rgba(7, 16, 35, .82),
+            rgba(7, 16, 35, .7) 45%,
+            rgba(7, 16, 35, .88)
+        );
+}
+
+/* Keep electoral information clearly readable. */
+.panel {
+    background: linear-gradient(
+        145deg,
+        rgba(21, 35, 63, .97),
+        rgba(12, 23, 45, .97)
+    );
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Add a refined hover effect to panels. */
+.panel {
+    transition: border-color .25s ease, box-shadow .25s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .panel:hover {
+        border-color: #465b82;
+        box-shadow: 0 22px 60px rgba(0, 0, 0, .25);
+    }
+
+    .office-button:not(.active):hover {
+        transform: translateY(-4px);
+        border-color: #a49aff;
+        box-shadow: 0 10px 24px rgba(104, 74, 210, .16);
+    }
+
+    .geographic-card:hover {
+        box-shadow: 0 10px 24px rgba(104, 74, 210, .13);
+    }
+}
+
+/* Preserve a clearly distinguishable selected office. */
+.office-button.active,
+.office-button.active:hover {
+    background: linear-gradient(135deg, #303b7c, #382e72);
+    border-color: #a49aff;
+    box-shadow: inset 0 0 0 1px #a49aff;
+}
+
+/* Keep the photograph from dominating on mobile. */
+@media (max-width: 700px) {
+    body::before {
+        opacity: .09;
+        background-position: 55% center;
+    }
+
+    .panel {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .panel,
+    .office-button,
+    .geographic-card {
+        transition: none;
+    }
+}
+
+
+/* KURAGUARD EXPLORER VISIBILITY FIX 150D */
+
+/*
+ * Use one photographic layer with its own dark gradient.
+ * This prevents two independent overlays from hiding the image.
+ */
+
+body::before {
+    opacity: 1 !important;
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(5, 14, 32, .70) 0%,
+            rgba(7, 17, 38, .57) 55%,
+            rgba(9, 20, 43, .68) 100%
+        ),
+        url('/images/home/agents.jpg') !important;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+body::after {
+    background: none !important;
+}
+
+/* Preserve legibility over the photograph. */
+.panel {
+    background: rgba(12, 24, 47, .96);
+}
+
+/* Maintain a subtle image on narrow screens. */
+@media (max-width: 700px) {
+    body::before {
+        opacity: 1 !important;
+        background-image:
+            linear-gradient(
+                rgba(5, 14, 32, .80),
+                rgba(7, 17, 38, .76)
+            ),
+            url('/images/home/agents.jpg') !important;
+        background-position: 55% center;
+    }
+}

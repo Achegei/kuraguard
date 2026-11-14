@@ -1,0 +1,261 @@
+/* KuraGuard Mobile Experience — Step 158B */
+
+/* Keep flex children from forcing horizontal overflow */
+.kg-public .kg-public-nav,
+.kg-public .kg-public-links {
+    min-width: 0;
+}
+
+.kg-public .kg-public-brand {
+    min-width: 0;
+}
+
+/* Tablet and mobile navigation */
+@media (max-width: 1100px) {
+
+    .kg-public .kg-public-header {
+        position: relative;
+        z-index: 200;
+        background: rgba(7, 21, 36, .97);
+        border-bottom: 1px solid rgba(104, 231, 185, .14);
+    }
+
+    .kg-public .kg-public-nav {
+        position: relative;
+        gap: 12px;
+        min-height: 76px;
+    }
+
+    /* Premium hamburger */
+    .kg-public .kg-mobile-menu-toggle {
+        flex: 0 0 50px;
+        width: 50px;
+        height: 50px;
+        gap: 5px;
+        border-radius: 16px;
+        border: 1px solid rgba(107, 231, 188, .36);
+        background:
+            linear-gradient(
+                145deg,
+                rgba(32, 94, 91, .75),
+                rgba(9, 34, 53, .95)
+            );
+        box-shadow:
+            0 8px 24px rgba(0, 0, 0, .2),
+            inset 0 1px 0 rgba(255, 255, 255, .1);
+        -webkit-tap-highlight-color: transparent;
+        transition:
+            background .25s ease,
+            border-color .25s ease,
+            box-shadow .25s ease,
+            transform .25s ease;
+    }
+
+    .kg-public .kg-mobile-menu-toggle:hover,
+    .kg-public .kg-mobile-menu-toggle[aria-expanded="true"] {
+        background: rgba(29, 117, 92, .9);
+        border-color: #65eac0;
+        box-shadow: 0 0 0 4px rgba(101, 234, 192, .12);
+    }
+
+    .kg-public .kg-mobile-menu-toggle span {
+        width: 23px;
+        height: 2.5px;
+        border-radius: 999px;
+        background: #eafff7;
+        transform-origin: center;
+        transition:
+            transform .28s ease,
+            opacity .18s ease,
+            background .2s ease;
+    }
+
+    .kg-public .kg-mobile-menu-toggle[aria-expanded="true"]
+    span:nth-child(1) {
+        transform: translateY(7.5px) rotate(45deg);
+    }
+
+    .kg-public .kg-mobile-menu-toggle[aria-expanded="true"]
+    span:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(.2);
+    }
+
+    .kg-public .kg-mobile-menu-toggle[aria-expanded="true"]
+    span:nth-child(3) {
+        transform: translateY(-7.5px) rotate(-45deg);
+    }
+
+    /* Dropdown panel */
+    .kg-public .kg-public-links {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        right: 0;
+        z-index: 210;
+        max-height: min(75dvh, 650px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding: 16px;
+        gap: 6px;
+        border-radius: 22px;
+        border: 1px solid rgba(117, 221, 192, .28);
+        background:
+            linear-gradient(
+                155deg,
+                rgba(12, 35, 53, .98),
+                rgba(5, 22, 38, .98)
+            );
+        box-shadow:
+            0 25px 60px rgba(0, 0, 0, .42),
+            inset 0 1px 0 rgba(255, 255, 255, .08);
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
+    }
+
+    .kg-public .kg-public-links.kg-menu-open {
+        animation: kg-menu-enter-158b .25s ease both;
+    }
+
+    @keyframes kg-menu-enter-158b {
+        from {
+            opacity: 0;
+            transform: translateY(-10px) scale(.985);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .kg-public .kg-public-links > a {
+        display: flex;
+        align-items: center;
+        min-height: 50px;
+        padding: 13px 17px;
+        border-radius: 13px;
+        border: 1px solid transparent;
+        color: #e9f7f5;
+        font-size: 15px;
+        font-weight: 650;
+        line-height: 1.4;
+        white-space: normal;
+        transition:
+            background .2s ease,
+            border-color .2s ease,
+            transform .2s ease;
+    }
+
+    .kg-public .kg-public-links > a:not(.kg-nav-register):hover,
+    .kg-public .kg-public-links > a:not(.kg-nav-register):focus-visible {
+        background: rgba(82, 224, 173, .12);
+        border-color: rgba(82, 224, 173, .25);
+        color: #9af5d3;
+        transform: translateX(3px);
+    }
+
+    .kg-public .kg-public-links > .kg-nav-register {
+        min-height: 52px;
+        margin-top: 8px;
+        justify-content: center;
+        text-align: center;
+        background: linear-gradient(110deg, #55e5b3, #8cf4ce);
+        color: #092b30;
+        font-weight: 850;
+        box-shadow: 0 10px 24px rgba(39, 196, 141, .18);
+    }
+
+    .kg-public .kg-public-links > .kg-nav-register:hover {
+        background: #a2f8d9;
+        color: #092b30;
+        transform: translateY(-1px);
+    }
+}
+
+/* Narrow phones */
+@media (max-width: 480px) {
+    .kg-public .kg-public-nav {
+        min-height: 69px;
+        gap: 8px;
+    }
+
+    .kg-public .kg-mobile-menu-toggle {
+        flex-basis: 46px;
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+    }
+
+    .kg-public .kg-public-links {
+        padding: 12px;
+        border-radius: 17px;
+    }
+
+    .kg-public .kg-public-links > a {
+        min-height: 48px;
+        font-size: 14px;
+    }
+
+    /* Homepage content */
+    .kg-home-v2 .kg-home-wrap {
+        width: calc(100% - 32px);
+    }
+
+    .kg-home-v2 .kg-hero-content h1 {
+        font-size: clamp(36px, 10vw, 50px);
+        line-height: 1.09;
+        overflow-wrap: break-word;
+    }
+
+    .kg-home-v2 .kg-hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .kg-home-v2 .kg-hero-buttons .kg-btn {
+        width: 100%;
+        min-height: 50px;
+        text-align: center;
+    }
+
+    .kg-home-v2 .kg-editorial-copy {
+        max-width: 100%;
+        padding: 22px;
+    }
+
+    .kg-home-v2 .kg-editorial-copy h3 {
+        overflow-wrap: break-word;
+    }
+
+    .kg-home-v2 .kg-final-buttons {
+        width: 100%;
+    }
+}
+
+/* Extremely narrow devices */
+@media (max-width: 360px) {
+    .kg-public .kg-public-nav {
+        gap: 6px;
+    }
+
+    .kg-public .kg-public-links {
+        padding: 10px;
+    }
+
+    .kg-home-v2 .kg-hero-content h1 {
+        font-size: 35px;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .kg-public .kg-public-links.kg-menu-open {
+        animation: none;
+    }
+
+    .kg-public .kg-mobile-menu-toggle,
+    .kg-public .kg-mobile-menu-toggle span,
+    .kg-public .kg-public-links > a {
+        transition: none;
+    }
+}

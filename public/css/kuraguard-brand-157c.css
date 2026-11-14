@@ -1,0 +1,113 @@
+/* KuraGuard official frontend branding — 157C */
+
+.kg-brand-157c {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2px;
+    width: max-content;
+    max-width: 100%;
+    line-height: 1.2;
+}
+
+.kg-brand-image-157c {
+    display: block;
+    width: auto;
+    height: 65px;
+    max-width: 190px;
+    object-fit: contain;
+    object-position: left center;
+}
+
+.kg-brand-tagline-157c {
+    display: block;
+    color: #9ceacb;
+    font-size: 9px;
+    font-weight: 750;
+    line-height: 1.4;
+    letter-spacing: .025em;
+    white-space: normal;
+    max-width: 205px;
+}
+
+.kg-public-brand,
+.kg-auth-header .kg-public-brand,
+.kg-explorer-brand-157c,
+.kg-join-header-155d .brand {
+    display: inline-flex !important;
+    align-items: center;
+    width: max-content;
+    max-width: 100%;
+    text-decoration: none !important;
+}
+
+/* Shared homepage navigation */
+.kg-public-header .kg-brand-image-157c {
+    height: 65px;
+}
+
+/* Aspirant registration header */
+.kg-auth-header .kg-brand-image-157c {
+    height: 65px;
+}
+
+/* Login photographic panel */
+.kg-login-brand-157c {
+    display: inline-flex !important;
+    align-items: flex-start;
+    width: auto;
+    height: auto;
+}
+
+.kg-login-brand-157c .kg-brand-image-157c {
+    height: 85px;
+    max-width: 235px;
+}
+
+/* Explorer */
+.kg-explorer-brand-157c .kg-brand-image-157c {
+    height: 65px;
+}
+
+/* Agent and Mobilizer registration */
+.kg-join-header-155d .brand .kg-brand-image-157c {
+    height: 65px;
+}
+
+/* Improve contrast where the brand sits on pale surfaces */
+.kg-public-header:not(.kg-dark-header) .kg-brand-tagline-157c {
+    color: #168765;
+}
+
+/* Keep navigation practical on mobile */
+@media (max-width: 700px) {
+    .kg-brand-image-157c,
+    .kg-public-header .kg-brand-image-157c,
+    .kg-auth-header .kg-brand-image-157c,
+    .kg-explorer-brand-157c .kg-brand-image-157c,
+    .kg-join-header-155d .brand .kg-brand-image-157c {
+        height: 50px;
+        max-width: 140px;
+    }
+
+    .kg-brand-tagline-157c {
+        font-size: 8px;
+        max-width: 155px;
+    }
+
+    .kg-login-brand-157c .kg-brand-image-157c {
+        height: 70px;
+    }
+}
+
+@media (max-width: 390px) {
+    .kg-brand-image-157c {
+        height: 44px !important;
+    }
+
+    .kg-brand-tagline-157c {
+        font-size: 7px;
+        max-width: 135px;
+    }
+}

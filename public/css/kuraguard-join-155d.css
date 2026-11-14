@@ -1,0 +1,287 @@
+/* KuraGuard immersive campaign recruitment — Step 155D */
+
+/* Full-page photographic atmosphere */
+html {
+    background: #071426;
+}
+
+body:has(.kg-join-hero-155d) {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    background: #071426 !important;
+    color: #f4f8fc;
+}
+
+body:has(.kg-join-hero-155d)::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(5,15,31,.91),
+            rgba(7,27,42,.83) 50%,
+            rgba(5,35,31,.88)
+        ),
+        url('/images/home/agents.jpg')
+        center center / cover no-repeat;
+}
+
+/* Minimal header, no secondary navigation */
+body .kg-join-header-155d {
+    position: relative;
+    z-index: 20;
+    background: rgba(7,19,35,.94) !important;
+    border-bottom: 1px solid rgba(255,255,255,.11);
+    backdrop-filter: blur(16px);
+}
+
+.kg-join-header-155d .nav {
+    max-width: 1160px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.kg-join-header-155d .brand {
+    display: inline-block;
+    color: #fff !important;
+    font-size: 27px;
+    font-weight: 850;
+    letter-spacing: -1px;
+    opacity: 1 !important;
+}
+
+.kg-join-header-155d .brand span {
+    color: #54e5b2 !important;
+}
+
+.kg-join-home-155d {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 10px 18px;
+    border: 1px solid rgba(255,255,255,.24);
+    border-radius: 999px;
+    color: #e9f6f3 !important;
+    font-size: 13px;
+    font-weight: 750;
+    transition: background .2s, transform .2s;
+}
+
+.kg-join-home-155d:hover {
+    background: rgba(84,229,178,.14);
+    transform: translateY(-2px);
+}
+
+/* Hero blends into the rest of the page */
+body .kg-join-hero-155d {
+    background: transparent !important;
+    padding: 78px 20px 105px;
+}
+
+.kg-join-hero-155d .kg-join-hero-inner {
+    max-width: 830px;
+}
+
+.kg-join-hero-155d h1 {
+    font-size: clamp(38px, 5.5vw, 68px);
+    line-height: 1.07;
+    letter-spacing: -2.4px;
+    color: #fff;
+    text-wrap: balance;
+}
+
+.kg-join-hero-155d p {
+    max-width: 650px;
+    color: #d5e4ed;
+    font-size: 16px;
+}
+
+.kg-join-hero-caption-155d {
+    margin-top: 25px;
+    color: #a8f2d4;
+    font-size: 12px;
+    font-weight: 750;
+    letter-spacing: 1.1px;
+}
+
+.kg-join-hero-caption-155d span {
+    margin-right: 7px;
+}
+
+/* Frosted dark registration panel */
+body:has(.kg-join-hero-155d) main {
+    position: relative;
+    z-index: 2;
+    max-width: 1000px;
+    margin-top: -55px;
+}
+
+body:has(.kg-join-hero-155d) .panel {
+    background: rgba(11,27,45,.91) !important;
+    border: 1px solid rgba(165,207,222,.22) !important;
+    border-radius: 24px;
+    box-shadow:
+        0 32px 90px rgba(0,0,0,.38),
+        inset 0 1px 0 rgba(255,255,255,.08);
+    backdrop-filter: blur(20px);
+    color: #f5f9fd;
+}
+
+body:has(.kg-join-hero-155d) .section-title,
+body:has(.kg-join-hero-155d) h3,
+body:has(.kg-join-hero-155d) label {
+    color: #f7fbff;
+}
+
+body:has(.kg-join-hero-155d) .sub,
+body:has(.kg-join-hero-155d) .notice {
+    color: #b5c8d8;
+}
+
+body:has(.kg-join-hero-155d) .divider {
+    border-top-color: rgba(255,255,255,.13);
+}
+
+/* Premium interactive role cards */
+body:has(.kg-join-hero-155d) .roles {
+    gap: 18px;
+}
+
+body:has(.kg-join-hero-155d) .role {
+    position: relative;
+    min-height: 145px;
+    padding: 25px;
+    background: rgba(255,255,255,.055) !important;
+    border: 1px solid rgba(181,210,225,.24) !important;
+    border-radius: 17px;
+    color: #f5f9fd;
+    text-align: left;
+    transition:
+        background .2s,
+        border-color .2s,
+        box-shadow .2s,
+        transform .2s;
+}
+
+body:has(.kg-join-hero-155d) .role strong {
+    color: #fff !important;
+    font-size: 18px;
+}
+
+body:has(.kg-join-hero-155d) .role small {
+    color: #b9cad9 !important;
+    font-size: 13px;
+}
+
+body:has(.kg-join-hero-155d) .role:hover {
+    transform: translateY(-3px);
+    background: rgba(84,229,178,.10) !important;
+    border-color: rgba(84,229,178,.65) !important;
+}
+
+body:has(.kg-join-hero-155d) .role.active {
+    background: rgba(24,139,106,.22) !important;
+    border: 2px solid #54e5b2 !important;
+    box-shadow:
+        0 0 0 3px rgba(84,229,178,.08),
+        0 15px 35px rgba(0,0,0,.12) !important;
+}
+
+body:has(.kg-join-hero-155d) .role.active::after {
+    content: "✓ Selected";
+    position: absolute;
+    top: 14px;
+    right: 15px;
+    color: #8cf5cc;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+/* Light inputs inside the dark panel for readability */
+body:has(.kg-join-hero-155d) input,
+body:has(.kg-join-hero-155d) select,
+body:has(.kg-join-hero-155d) textarea {
+    background: rgba(255,255,255,.97);
+    color: #142238;
+    border: 1px solid #b7cad5;
+    border-radius: 11px;
+}
+
+body:has(.kg-join-hero-155d) input:focus,
+body:has(.kg-join-hero-155d) select:focus,
+body:has(.kg-join-hero-155d) textarea:focus {
+    border-color: #39d6a1;
+    outline: 3px solid rgba(57,214,161,.24);
+}
+
+body:has(.kg-join-hero-155d) select:disabled {
+    background: #dce4ea;
+    color: #536577;
+}
+
+body:has(.kg-join-hero-155d) .btn {
+    background: linear-gradient(110deg, #087b54, #0c9d72);
+    border-radius: 999px;
+    color: white;
+    font-weight: 800;
+    box-shadow: 0 12px 30px rgba(4,100,73,.25);
+}
+
+body:has(.kg-join-hero-155d) .btn:hover {
+    background: linear-gradient(110deg, #096b4b, #087b54);
+}
+
+/* Footer */
+body:has(.kg-join-hero-155d) footer {
+    color: #a8c0d1;
+    background: transparent;
+}
+
+@media (max-width: 700px) {
+    .kg-join-header-155d .nav {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .kg-join-header-155d .brand {
+        font-size: 23px;
+    }
+
+    .kg-join-home-155d {
+        font-size: 12px;
+        padding: 9px 12px;
+    }
+
+    body .kg-join-hero-155d {
+        padding: 56px 18px 95px;
+    }
+
+    .kg-join-hero-155d h1 {
+        letter-spacing: -1.5px;
+    }
+
+    body:has(.kg-join-hero-155d) .panel {
+        border-radius: 18px;
+        padding: 24px 19px;
+    }
+
+    body:has(.kg-join-hero-155d) .role {
+        min-height: 120px;
+        padding: 20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .kg-join-home-155d,
+    body:has(.kg-join-hero-155d) .role {
+        transition: none;
+    }
+}

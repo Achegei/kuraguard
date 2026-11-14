@@ -1,0 +1,230 @@
+/* KuraGuard Immersive Authentication — Step 156B */
+
+/* ===== Shared visual language ===== */
+
+body.kg-login-immersive,
+body.kg-auth:has(.kg-auth-experience) {
+    background: #071426 !important;
+    color: #eef7fb;
+}
+
+/* ===== Login: existing split-screen layout ===== */
+
+body.kg-login-immersive {
+    min-height: 100vh;
+}
+
+body.kg-login-immersive .form-area {
+    position: relative;
+    isolation: isolate;
+    background: #08192b !important;
+    color: #f3f9fc;
+}
+
+body.kg-login-immersive .form-area::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(5,17,33,.94),
+            rgba(8,34,46,.88)
+        ),
+        url('/images/home/agents.jpg')
+        center / cover no-repeat;
+}
+
+body.kg-login-immersive .form-card {
+    background: rgba(12,31,48,.87) !important;
+    border: 1px solid rgba(167,214,221,.2);
+    border-radius: 22px;
+    padding: clamp(24px, 3vw, 42px);
+    box-shadow: 0 25px 70px rgba(0,0,0,.25);
+    backdrop-filter: blur(20px);
+}
+
+body.kg-login-immersive .form-card h2,
+body.kg-login-immersive .form-card label {
+    color: #f7fbff !important;
+}
+
+body.kg-login-immersive .form-card .description {
+    color: #bdceda !important;
+}
+
+body.kg-login-immersive .form-card .eyebrow {
+    color: #74e6bb !important;
+}
+
+body.kg-login-immersive .form-card input {
+    background: rgba(255,255,255,.96) !important;
+    color: #10233b !important;
+    border: 1px solid #b6c9d4 !important;
+    border-radius: 11px;
+}
+
+body.kg-login-immersive .form-card input:focus {
+    outline: 3px solid rgba(72,222,169,.25);
+    border-color: #48dea9 !important;
+}
+
+body.kg-login-immersive .form-card button[type="submit"] {
+    background: linear-gradient(110deg,#087b54,#0ca779) !important;
+    border-radius: 999px;
+    color: white !important;
+    box-shadow: 0 12px 28px rgba(0,0,0,.18);
+}
+
+body.kg-login-immersive .form-card button[type="submit"]:hover {
+    background: linear-gradient(110deg,#086a4b,#08956b) !important;
+}
+
+body.kg-login-immersive .kg-nav-account-shortcut {
+    color: #bed1dc;
+}
+
+body.kg-login-immersive .kg-nav-account-shortcut a {
+    color: #79edc1;
+}
+
+body.kg-login-immersive .notice {
+    background: rgba(78,159,177,.1) !important;
+    border: 1px solid rgba(153,209,216,.22) !important;
+    color: #c4d9e2 !important;
+    border-radius: 12px;
+}
+
+body.kg-login-immersive .notice strong {
+    color: #f4fbff;
+}
+
+body.kg-login-immersive .error {
+    background: rgba(127,35,49,.35) !important;
+    color: #ffe0e4 !important;
+    border: 1px solid rgba(255,151,163,.35);
+}
+
+/* ===== Aspirant registration ===== */
+
+body.kg-auth:has(.kg-auth-experience) .kg-auth-form-panel {
+    position: relative;
+    isolation: isolate;
+    background: #091a2b !important;
+    color: #f5f9fc;
+}
+
+body.kg-auth:has(.kg-auth-experience) .kg-auth-form-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(7,20,38,.95),
+            rgba(9,37,45,.89)
+        ),
+        url('/images/home/agents.jpg')
+        center / cover no-repeat;
+}
+
+body.kg-auth:has(.kg-auth-experience) .kg-auth-form-shell {
+    background: rgba(11,29,47,.83);
+    border: 1px solid rgba(169,209,220,.22);
+    border-radius: 22px;
+    padding: clamp(24px,3vw,42px);
+    box-shadow: 0 24px 65px rgba(0,0,0,.24);
+    backdrop-filter: blur(20px);
+}
+
+body.kg-auth:has(.kg-auth-experience) .kg-auth-form-heading h2,
+body.kg-auth:has(.kg-auth-experience) .kg-auth-field label {
+    color: #f7fbff !important;
+}
+
+body.kg-auth:has(.kg-auth-experience) .kg-auth-form-heading p,
+body.kg-auth:has(.kg-auth-experience) .kg-auth-field small,
+body.kg-auth:has(.kg-auth-experience) .kg-auth-bottom-link {
+    color: #bdcedb !important;
+}
+
+body.kg-auth:has(.kg-auth-experience) .kg-auth-form-topline {
+    color: #a9c7d3 !important;
+}
+
+body.kg-auth:has(.kg-auth-experience) .kg-auth-form-kicker {
+    color: #79e8bd !important;
+}
+
+body.kg-auth:has(.kg-auth-experience) .kg-auth-field input {
+    background: rgba(255,255,255,.97) !important;
+    border: 1px solid #b7cad5 !important;
+    border-radius: 11px;
+    color: #10233b !important;
+}
+
+body.kg-auth:has(.kg-auth-experience) .kg-auth-field input:focus {
+    border-color: #48dea9 !important;
+    outline: 3px solid rgba(72,222,169,.24);
+}
+
+body.kg-auth:has(.kg-auth-experience) .kg-auth-primary-button {
+    background: linear-gradient(110deg,#087b54,#0ca779) !important;
+    border-radius: 999px;
+    color: #fff !important;
+}
+
+body.kg-auth:has(.kg-auth-experience) .kg-auth-bottom-link a {
+    color: #79edc1 !important;
+}
+
+body.kg-auth:has(.kg-auth-experience) .kg-auth-security-note {
+    color: #b7cad7;
+}
+
+body.kg-auth:has(.kg-auth-experience) .kg-auth-error {
+    background: rgba(127,35,49,.34) !important;
+    border: 1px solid rgba(255,151,163,.35);
+    color: #ffe0e4 !important;
+}
+
+/* Darken and soften the registration photograph */
+body.kg-auth:has(.kg-auth-experience) .kg-auth-story::after {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(5,16,34,.79),
+            rgba(8,26,45,.69) 48%,
+            rgba(4,19,33,.84)
+        ) !important;
+}
+
+/* ===== Mobile ===== */
+
+@media (max-width: 980px) {
+    body.kg-login-immersive .form-card,
+    body.kg-auth:has(.kg-auth-experience) .kg-auth-form-shell {
+        margin: 16px;
+        padding: 25px 21px;
+    }
+}
+
+@media (max-width: 520px) {
+    body.kg-login-immersive .form-card,
+    body.kg-auth:has(.kg-auth-experience) .kg-auth-form-shell {
+        border-radius: 16px;
+        margin: 8px;
+        padding: 23px 17px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.kg-login-immersive *,
+    body.kg-auth:has(.kg-auth-experience) * {
+        scroll-behavior: auto;
+    }
+}

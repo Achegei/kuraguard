@@ -1,0 +1,94 @@
+
+/* KURAGUARD REGISTRATION PHOTOGRAPHIC PANEL */
+
+.kg-auth .kg-auth-story {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #0b1b35;
+}
+
+.kg-auth .kg-auth-story::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-image: url('/images/home/aspirant.jpg');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transform: scale(1);
+  transition: transform .8s ease;
+}
+
+.kg-auth .kg-auth-story::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5,16,38,.94) 0%,
+      rgba(7,23,49,.88) 48%,
+      rgba(9,28,55,.72) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(5,16,38,.88) 0%,
+      transparent 65%
+    );
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .kg-auth .kg-auth-story:hover::before {
+    transform: scale(1.045);
+  }
+}
+
+.kg-auth .kg-auth-story-content,
+.kg-auth .kg-auth-story-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.kg-auth .kg-auth-story h1 {
+  color: #fff;
+  text-shadow: 0 3px 20px rgba(0,0,0,.18);
+}
+
+.kg-auth .kg-auth-story-description {
+  color: #d2e0f1;
+}
+
+.kg-auth .kg-auth-feature {
+  transition: transform .2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .kg-auth .kg-auth-feature:hover {
+    transform: translateX(5px);
+  }
+}
+
+@media (max-width: 700px) {
+  .kg-auth .kg-auth-story::before {
+    background-position: center 35%;
+  }
+
+  .kg-auth .kg-auth-story::after {
+    background: linear-gradient(
+      90deg,
+      rgba(5,16,38,.94),
+      rgba(7,23,49,.8)
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kg-auth .kg-auth-story::before,
+  .kg-auth .kg-auth-feature {
+    transition: none;
+  }
+}

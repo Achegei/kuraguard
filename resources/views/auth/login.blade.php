@@ -176,13 +176,138 @@
             .intro-footer { display: none; }
             .form-area { padding: 50px 25px; }
         }
+
+        /* KURAGUARD LOGIN PHOTO 148B */
+
+        .intro {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            background: #0b1730;
+        }
+
+        .intro::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            background-image: url('/images/home/agents.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transform: scale(1);
+            transition: transform .8s ease;
+        }
+
+        .intro::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(5, 16, 38, .94) 0%,
+                    rgba(7, 23, 49, .84) 55%,
+                    rgba(9, 28, 55, .68) 100%
+                ),
+                linear-gradient(
+                    0deg,
+                    rgba(5, 16, 38, .88),
+                    transparent 65%
+                );
+            pointer-events: none;
+        }
+
+        .intro > div {
+            position: relative;
+            z-index: 1;
+        }
+
+        .intro .brand span {
+            color: #60a5fa;
+        }
+
+        .intro h1 {
+            color: #fff;
+            text-shadow: 0 3px 20px rgba(0,0,0,.18);
+        }
+
+        .intro p {
+            color: #d2e0f1;
+        }
+
+        .form-area button {
+            transition:
+                background .2s ease,
+                transform .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .form-area button:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37,99,235,.18);
+        }
+
+        .form-area button:focus-visible {
+            outline: 3px solid #60a5fa;
+            outline-offset: 4px;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .intro:hover::before {
+                transform: scale(1.045);
+            }
+        }
+
+        @media (max-width: 850px) {
+            .intro::before {
+                background-position: center 35%;
+            }
+
+            .intro::after {
+                background: linear-gradient(
+                    90deg,
+                    rgba(5,16,38,.94),
+                    rgba(7,23,49,.8)
+                );
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .intro::before,
+            .form-area button {
+                transition: none;
+            }
+
+            .form-area button:hover {
+                transform: none;
+            }
+        }
+
     </style>
+    <link rel="stylesheet" href="{{ asset('css/kuraguard-navigation-153.css') }}?v=20261114a">
+    <link rel="stylesheet" href="{{ asset('css/kuraguard-civic-ticker.css') }}?v=20261114a">
+    <link rel="stylesheet" href="{{ asset('css/kuraguard-auth-immersive-156.css') }}?v=20261114b">
+    <link rel="stylesheet" href="{{ asset('css/kuraguard-brand-157c.css') }}?v=20261114c">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=20261114c">
 </head>
-<body>
+<body class="kg-login-immersive">
+<x-civic-ticker />
 <div class="layout">
     <section class="intro">
         <div>
-            <div class="brand">Kura<span>Guard</span></div>
+            <div class="brand kg-login-brand-157c"><span class="kg-brand-157c">
+    <img
+        class="kg-brand-image-157c"
+        src="{{ asset('images/brand/kuraguard-logo-transparent.png') }}"
+        alt="KuraGuard"
+    >
+    <span class="kg-brand-tagline-157c">
+        Every Polling Station. Every Vote. Accounted For.
+    </span>
+</span></div>
             <div class="brand-subtitle">Election Intelligence Platform</div>
         </div>
 
@@ -247,6 +372,14 @@
 
                 <button type="submit">Sign in to KuraGuard</button>
             </form>
+
+            <div class="kg-nav-account-shortcut">
+                <span>Don't have an account?</span>
+                <a href="{{ route('register') }}">
+                    Register as an Aspirant →
+                </a>
+            </div>
+
 
             <div class="notice">
                 <strong>Demonstration environment</strong><br>

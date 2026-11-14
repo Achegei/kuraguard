@@ -1,0 +1,221 @@
+/* KuraGuard premium join experience — 155C */
+
+.kg-join-header {
+    position: relative;
+    z-index: 20;
+    background: rgba(255,255,255,.97);
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.kg-join-header .nav {
+    max-width: 1200px;
+    gap: 18px;
+}
+
+.kg-join-nav-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.kg-join-nav-actions a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 42px;
+    padding: 9px 15px;
+    border-radius: 999px;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 750;
+    transition: background .2s ease, color .2s ease,
+                transform .2s ease;
+}
+
+.kg-join-nav-actions a:hover {
+    color: #087b54;
+    background: #e8f5ee;
+    transform: translateY(-1px);
+}
+
+.kg-join-nav-actions .kg-join-signin {
+    background: #101c32;
+    color: white;
+}
+
+.kg-join-nav-actions .kg-join-signin:hover {
+    background: #087b54;
+    color: white;
+}
+
+.kg-join-photo-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 88px 24px 115px;
+    background:
+        linear-gradient(
+            105deg,
+            rgba(7,18,36,.94) 0%,
+            rgba(9,30,49,.83) 48%,
+            rgba(7,35,36,.69) 100%
+        ),
+        url('/images/home/agents.jpg')
+        center 42% / cover no-repeat;
+}
+
+.kg-join-photo-hero::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background:
+        radial-gradient(
+            circle at 75% 25%,
+            rgba(38,210,151,.16),
+            transparent 48%
+        );
+    pointer-events: none;
+}
+
+.kg-join-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: auto;
+}
+
+.kg-join-photo-hero h1 {
+    font-size: clamp(36px, 5vw, 60px);
+    line-height: 1.08;
+    letter-spacing: -2px;
+    text-wrap: balance;
+    text-shadow: 0 3px 22px rgba(0,0,0,.2);
+}
+
+.kg-join-photo-hero p {
+    max-width: 650px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #e3edf1;
+}
+
+.kg-join-hero-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 27px;
+}
+
+.kg-join-hero-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 11px 19px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.45);
+    background: rgba(255,255,255,.09);
+    color: white;
+    font-size: 13px;
+    font-weight: 750;
+    backdrop-filter: blur(8px);
+    transition: background .2s ease,
+                border-color .2s ease,
+                transform .2s ease;
+}
+
+.kg-join-hero-links a:hover {
+    background: rgba(8,123,84,.8);
+    border-color: #6ee7b7;
+    transform: translateY(-2px);
+}
+
+body:has(.kg-join-photo-hero) {
+    background:
+        linear-gradient(
+            rgba(245,247,249,.95),
+            rgba(245,247,249,.98)
+        ),
+        url('/images/home/aspirant.jpg')
+        center top / cover fixed no-repeat;
+}
+
+body:has(.kg-join-photo-hero) main {
+    max-width: 980px;
+    margin-top: -52px;
+    z-index: 2;
+}
+
+body:has(.kg-join-photo-hero) .panel {
+    background: rgba(255,255,255,.98);
+    border: 1px solid rgba(226,232,240,.9);
+    border-radius: 22px;
+    box-shadow:
+        0 25px 70px rgba(10,25,44,.13),
+        0 2px 10px rgba(10,25,44,.04);
+}
+
+body:has(.kg-join-photo-hero) .role {
+    border-radius: 14px;
+}
+
+body:has(.kg-join-photo-hero) .role:hover {
+    border-color: #087b54;
+    box-shadow: 0 12px 28px rgba(8,123,84,.11);
+}
+
+body:has(.kg-join-photo-hero) .btn {
+    border-radius: 999px;
+    box-shadow: 0 8px 22px rgba(8,123,84,.16);
+}
+
+@media (max-width: 700px) {
+    .kg-join-header .nav {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .kg-join-nav-actions {
+        width: 100%;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .kg-join-nav-actions a {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    .kg-join-photo-hero {
+        padding: 62px 18px 90px;
+        background-position: 55% center;
+    }
+
+    .kg-join-photo-hero h1 {
+        letter-spacing: -1.3px;
+    }
+
+    .kg-join-photo-hero p {
+        font-size: 14px;
+    }
+
+    .kg-join-hero-links a {
+        padding: 10px 14px;
+        font-size: 12px;
+    }
+
+    body:has(.kg-join-photo-hero) .panel {
+        border-radius: 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .kg-join-nav-actions a,
+    .kg-join-hero-links a {
+        transition: none;
+    }
+}

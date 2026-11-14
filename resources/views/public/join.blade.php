@@ -248,25 +248,56 @@ footer {
 }
 </style>
 <link rel="stylesheet" href="{{ asset('css/kuraguard-join-premium.css') }}">
+<link rel="stylesheet" href="{{ asset('css/kuraguard-join-155c.css') }}?v=20261114a">
+    <link rel="stylesheet" href="{{ asset('css/kuraguard-civic-ticker.css') }}?v=20261114a">
+    <link rel="stylesheet" href="{{ asset('css/kuraguard-join-155d.css') }}?v=20261114a">
+    <link rel="stylesheet" href="{{ asset('css/kuraguard-brand-157c.css') }}?v=20261114c">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=20261114c">
 </head>
 <body>
-<header>
-    <nav class="nav">
-        <a href="/" class="brand">Kura<span>Guard</span></a>
-        <a href="/" class="nav-link">Back to homepage</a>
+<x-civic-ticker />
+
+<header class="kg-join-header kg-join-header-155d">
+    <nav class="nav" aria-label="Registration page navigation">
+        <a href="{{ url('/') }}" class="brand"
+           aria-label="KuraGuard homepage">
+            <span class="kg-brand-157c">
+    <img
+        class="kg-brand-image-157c"
+        src="{{ asset('images/brand/kuraguard-logo-transparent.png') }}"
+        alt="KuraGuard"
+    >
+    <span class="kg-brand-tagline-157c">
+        Every Polling Station. Every Vote. Accounted For.
+    </span>
+</span>
+        </a>
+        <a href="{{ url('/') }}" class="kg-join-home-155d">
+            <span aria-hidden="true">←</span> Back to Home
+        </a>
     </nav>
 </header>
 
-<section class="hero">
-    <div class="eyebrow">Campaign participation</div>
-    <h1>Be part of the campaign.</h1>
-    <p>Apply to participate as a polling station agent or campaign mobilizer. Your application will be reviewed by the campaign team.</p>
+<section class="hero kg-join-photo-hero kg-join-hero-155d">
+    <div class="kg-join-hero-inner">
+        <div class="eyebrow">KuraGuard · Campaign Network</div>
+        <h1>Be where every vote matters.</h1>
+        <p>
+            Join the people supporting organized, accountable
+            election operations. Choose your role and apply
+            to participate in an authorized campaign.
+        </p>
+        <div class="kg-join-hero-caption-155d">
+            <span aria-hidden="true">◆</span>
+            Every Polling Station. Every Vote. Accounted For.
+        </div>
+    </div>
 </section>
 
 <main>
     <div class="panel">
-        <h2 class="section-title">Submit your application</h2>
-        <p class="sub">Choose how you would like to participate and provide your details below.</p>
+        <h2 class="section-title">Choose your role. Make your impact.</h2>
+        <p class="sub">Select one of the two opportunities below, then complete your application.</p>
 
         <div id="message" class="message" role="status" aria-live="polite"></div>
 

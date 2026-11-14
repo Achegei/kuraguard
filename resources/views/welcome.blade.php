@@ -1,328 +1,225 @@
 @extends('layouts.public')
-
-@section('title', 'KuraGuard | Election Intelligence & Command Platform')
-
+@section('title', 'KuraGuard | Every Polling Station. Every Vote. Accounted For.')
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/kuraguard-home.css') }}">
+<link rel="stylesheet" href="{{ asset('css/kuraguard-home.css') }}?v=20261113h">
 @endpush
-
 @section('content')
-<div class="kg-home">
-
-    <section class="kg-home-hero">
-        <div class="kg-home-container kg-hero-grid">
-
-            <div class="kg-hero-copy">
-                <div class="kg-home-eyebrow">
-                    <span class="kg-status-dot"></span>
-                    ELECTION INTELLIGENCE & COMMAND PLATFORM
-                </div>
-
-                <h1>
-                    Every agent.<br>
-                    Every station.<br>
-                    <span>Every vote.</span><br>
-                    Under your watch.
-                </h1>
-
-                <p>
-                    KuraGuard brings campaign teams, polling-station
-                    operations, incident monitoring and result
-                    verification into one coordinated command centre.
-                </p>
-
-                <div class="kg-home-actions">
-                    @auth
-                        <a class="kg-home-btn kg-home-btn-primary"
-                           href="{{ route('campaign.landing') }}">
-                            Open My Workspace
-                            <span aria-hidden="true">→</span>
-                        </a>
-                    @else
-                        <a class="kg-home-btn kg-home-btn-primary"
-                           href="{{ route('login') }}">
-                            Access KuraGuard
-                            <span aria-hidden="true">→</span>
-                        </a>
-                    @endauth
-
-                    <a class="kg-home-btn kg-home-btn-outline"
-                       href="#how-it-works">
-                        See How It Works
-                    </a>
-                </div>
-
-                <div class="kg-hero-trust">
-                    <span>Built for campaign operations</span>
-                    <span>Role-based access</span>
-                    <span>Traceable reporting</span>
-                </div>
-            </div>
-
-            <div class="kg-preview-frame">
-                <div class="kg-preview-topbar">
-                    <div class="kg-preview-brand">
-                        <span class="kg-preview-icon">K</span>
-                        <div>
-                            <strong>KuraGuard</strong>
-                            <small>Election Command Centre</small>
-                        </div>
-                    </div>
-                    <span class="kg-preview-live">
-                        <span></span> DEMO PREVIEW
-                    </span>
-                </div>
-
-                <div class="kg-preview-body">
-                    <div class="kg-preview-heading">
-                        <div>
-                            <small>CAMPAIGN INTELLIGENCE</small>
-                            <h3>Election Overview</h3>
-                        </div>
-                        <span>2027 Simulation</span>
-                    </div>
-
-                    <div class="kg-preview-stats">
-                        <div>
-                            <small>Polling Stations</small>
-                            <strong>1,248</strong>
-                            <span>Illustrative coverage</span>
-                        </div>
-                        <div>
-                            <small>Agents Deployed</small>
-                            <strong>1,186</strong>
-                            <span>Sample deployment</span>
-                        </div>
-                        <div>
-                            <small>Reporting Rate</small>
-                            <strong>95.0%</strong>
-                            <span>Example metric</span>
-                        </div>
-                    </div>
-
-                    <div class="kg-preview-chart">
-                        <div class="kg-preview-chart-header">
-                            <strong>Station Reporting Activity</strong>
-                            <span>Illustrative trend</span>
-                        </div>
-
-                        <svg viewBox="0 0 500 160"
-                             preserveAspectRatio="none"
-                             role="img"
-                             aria-label="Illustrative upward reporting trend">
-                            <defs>
-                                <linearGradient id="kgChartFill"
-                                                x1="0" y1="0"
-                                                x2="0" y2="1">
-                                    <stop offset="0%"
-                                          stop-color="#39d6ad"
-                                          stop-opacity=".26"/>
-                                    <stop offset="100%"
-                                          stop-color="#39d6ad"
-                                          stop-opacity="0"/>
-                                </linearGradient>
-                            </defs>
-                            <path d="M0 145 L60 130 L120 138 L180 95
-                                     L240 108 L300 66 L360 80
-                                     L420 36 L500 16 L500 160
-                                     L0 160 Z"
-                                  fill="url(#kgChartFill)"/>
-                            <path d="M0 145 L60 130 L120 138 L180 95
-                                     L240 108 L300 66 L360 80
-                                     L420 36 L500 16"
-                                  fill="none"
-                                  stroke="#39d6ad"
-                                  stroke-width="4"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-
-                    <div class="kg-preview-events">
-                        <div>
-                            <span class="kg-event-dot green"></span>
-                            Station check-in received
-                            <small>Sample</small>
-                        </div>
-                        <div>
-                            <span class="kg-event-dot amber"></span>
-                            Result awaiting verification
-                            <small>Sample</small>
-                        </div>
-                        <div>
-                            <span class="kg-event-dot blue"></span>
-                            Coordinator update recorded
-                            <small>Sample</small>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="kg-preview-disclaimer">
-                    Product illustration only. All displayed figures
-                    are fictional demonstration values.
-                </div>
-            </div>
+<div class="kg-home-v2">
+  <section class="kg-photo-hero" aria-label="KuraGuard election operations">
+    <div class="kg-hero-slides" data-kg-slideshow>
+      <div class="kg-hero-slide is-active" data-kg-slide style="--hero-photo:url('{{ asset('images/home/voters.jpg') }}')" role="img" aria-label="Voters queue outside a polling station"></div>
+      <div class="kg-hero-slide" data-kg-slide style="--hero-photo:url('{{ asset('images/home/aspirant.jpg') }}')" role="img" aria-label="Aspirant speaking from a podium"></div>
+      <div class="kg-hero-slide" data-kg-slide style="--hero-photo:url('{{ asset('images/home/agents.jpg') }}')" role="img" aria-label="Election agents coordinating field operations"></div>
+    </div>
+    <div class="kg-hero-shade"></div>
+    <div class="kg-home-wrap kg-hero-content">
+      <div class="kg-hero-eyebrow"><span class="kg-live-dot"></span> BUILT FOR KENYAN CAMPAIGNS</div>
+      <h1>Every Polling Station.<br><em>Every Vote.</em><br>Accounted For.</h1>
+      <p>One powerful workspace to coordinate your people, protect your reporting process and see what is happening across your campaign.</p>
+      <div class="kg-hero-buttons">
+        @auth
+          <a class="kg-btn kg-btn-primary" href="{{ route('campaign.landing') }}">Open My Workspace <span aria-hidden="true">↗</span></a>
+        @else
+          <a class="kg-btn kg-btn-primary" href="{{ route('register') }}">Register as an Aspirant <span aria-hidden="true">↗</span></a>
+        @endauth
+        <a class="kg-btn kg-btn-glass" href="#discover">Explore the Platform <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="kg-hero-bottom"><span>CAMPAIGN INTELLIGENCE · FIELD OPERATIONS · RESULT VERIFICATION</span>
+        <div class="kg-slide-controls" aria-label="Hero slideshow controls">
+          <button type="button" data-kg-prev aria-label="Previous slide">←</button>
+          <span data-kg-counter>01 / 03</span>
+          <button type="button" data-kg-next aria-label="Next slide">→</button>
+          <button type="button" data-kg-pause aria-label="Pause slideshow">Ⅱ</button>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <section class="kg-home-strip">
-        <div class="kg-home-container kg-strip-grid">
-            <span>ONE CAMPAIGN WORKSPACE</span>
-            <span>FIELD AGENT COORDINATION</span>
-            <span>STATION-LEVEL VISIBILITY</span>
-            <span>RESULT INTEGRITY</span>
+  <section class="kg-editorial" id="discover">
+    <div class="kg-home-wrap">
+      <div class="kg-section-head"><div><span class="kg-kicker">A NEW STANDARD FOR CAMPAIGN OPERATIONS</span><h2>Confidence begins<br>with <em>visibility.</em></h2></div><p>From the first field assignment to the final station report, bring your entire election operation together in one clear view.</p></div>
+      <div class="kg-editorial-grid">
+        <article class="kg-editorial-card kg-editorial-large"><div class="kg-photo" style="--card-photo:url('{{ asset('images/home/voters.jpg') }}')"></div><div class="kg-card-shade"></div><div class="kg-editorial-copy"><span>01 / THE PEOPLE</span><h3>Every community.<br>Every polling station.</h3><p>Plan and organize your campaign network with station-level clarity.</p></div></article>
+        <article class="kg-editorial-card"><div class="kg-photo" style="--card-photo:url('{{ asset('images/home/aspirant.jpg') }}')"></div><div class="kg-card-shade"></div><div class="kg-editorial-copy"><span>02 / THE CAMPAIGN</span><h3>Lead from the front.</h3><p>Give your team a coordinated command centre.</p></div></article>
+        <article class="kg-editorial-card"><div class="kg-photo" style="--card-photo:url('{{ asset('images/home/agents.jpg') }}')"></div><div class="kg-card-shade"></div><div class="kg-editorial-copy"><span>03 / THE FIELD</span><h3>Stay connected on the ground.</h3><p>Follow assignments, reports and incidents as they develop.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="kg-seat-section" id="races">
+    <div class="kg-home-wrap">
+      <div class="kg-seat-top">
+        <div>
+          <span class="kg-kicker">ONE PLATFORM. EVERY LEVEL OF LEADERSHIP.</span>
+          <h2>Built around <em>your race.</em></h2>
+          <p>From a single ward to a nationwide campaign, organize your election operations around the seat you're contesting.</p>
         </div>
-    </section>
+        <a class="kg-seat-cta" href="{{ route('register') }}">
+          Start your campaign <span aria-hidden="true">↗</span>
+        </a>
+      </div>
 
-    <section id="platform" class="kg-home-section">
-        <div class="kg-home-container">
-            <div class="kg-section-intro">
-                <span class="kg-section-label">THE PLATFORM</span>
-                <h2>
-                    Election operations deserve
-                    <span>complete visibility.</span>
-                </h2>
-                <p>
-                    Replace disconnected calls, spreadsheets and
-                    scattered updates with a coordinated operational
-                    workflow for your campaign team.
-                </p>
-            </div>
+      <div class="kg-seat-cards">
+        <a class="kg-seat-card" href="{{ route('register') }}">
+          <span class="kg-seat-symbol">01</span>
+          <strong>President</strong>
+          <small>National campaign</small>
+          <span class="kg-seat-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="kg-seat-card" href="{{ route('register') }}">
+          <span class="kg-seat-symbol">02</span>
+          <strong>Governor</strong>
+          <small>Countywide operations</small>
+          <span class="kg-seat-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="kg-seat-card" href="{{ route('register') }}">
+          <span class="kg-seat-symbol">03</span>
+          <strong>Senator</strong>
+          <small>County representation</small>
+          <span class="kg-seat-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="kg-seat-card" href="{{ route('register') }}">
+          <span class="kg-seat-symbol">04</span>
+          <strong>Woman Representative</strong>
+          <small>County representation</small>
+          <span class="kg-seat-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="kg-seat-card" href="{{ route('register') }}">
+          <span class="kg-seat-symbol">05</span>
+          <strong>Member of Parliament</strong>
+          <small>Constituency campaign</small>
+          <span class="kg-seat-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="kg-seat-card" href="{{ route('register') }}">
+          <span class="kg-seat-symbol">06</span>
+          <strong>Member of County Assembly</strong>
+          <small>Ward-level campaign</small>
+          <span class="kg-seat-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
 
-            <div class="kg-feature-grid">
-                <article class="kg-feature-card">
-                    <span class="kg-feature-number">01 / NETWORK</span>
-                    <div class="kg-feature-symbol">◎</div>
-                    <h3>Polling Station Coverage</h3>
-                    <p>
-                        Organize your campaign's station network and
-                        track where field reports have been received.
-                    </p>
-                </article>
-
-                <article class="kg-feature-card">
-                    <span class="kg-feature-number">02 / PEOPLE</span>
-                    <div class="kg-feature-symbol">♧</div>
-                    <h3>Agent Recruitment & Deployment</h3>
-                    <p>
-                        Coordinate applications, authorized assignments
-                        and field-agent participation.
-                    </p>
-                </article>
-
-                <article class="kg-feature-card">
-                    <span class="kg-feature-number">03 / OPERATIONS</span>
-                    <div class="kg-feature-symbol">◈</div>
-                    <h3>Election-Day Monitoring</h3>
-                    <p>
-                        Receive station reports, monitor attendance
-                        and track operational incidents.
-                    </p>
-                </article>
-
-                <article class="kg-feature-card">
-                    <span class="kg-feature-number">04 / INTEGRITY</span>
-                    <div class="kg-feature-symbol">◇</div>
-                    <h3>Results & Verification</h3>
-                    <p>
-                        Review submitted figures and maintain
-                        traceable verification and audit records.
-                    </p>
-                </article>
-            </div>
+  <section class="kg-capabilities" id="platform">
+    <div class="kg-home-wrap">
+      <div class="kg-command-intro">
+        <div>
+          <span class="kg-kicker">THE KURAGUARD PLATFORM</span>
+          <h2>One command centre.<br><em>Complete oversight.</em></h2>
         </div>
-    </section>
+        <p>Replace disconnected spreadsheets and fragmented updates with one structured workspace for your authorized campaign team.</p>
+      </div>
 
-    <section id="how-it-works" class="kg-workflow-section">
-        <div class="kg-home-container">
-            <div class="kg-section-intro">
-                <span class="kg-section-label">HOW IT WORKS</span>
-                <h2>
-                    From recruitment to results.
-                    <span>One connected journey.</span>
-                </h2>
-            </div>
+      <div class="kg-command-grid">
+        <article class="kg-command-card">
+          <div class="kg-command-card-top">
+            <span class="kg-command-number">01 / COVERAGE</span>
+            <span class="kg-command-icon" aria-hidden="true">◎</span>
+          </div>
+          <div>
+            <h3>Polling Station Network</h3>
+            <p>Organize geographic coverage and identify where station-level reporting needs attention.</p>
+          </div>
+        </article>
 
-            <div class="kg-workflow-grid">
-                <div class="kg-workflow-step">
-                    <span>01</span>
-                    <h3>Build your network</h3>
-                    <p>Recruit and organize authorized field personnel.</p>
-                </div>
+        <article class="kg-command-card">
+          <div class="kg-command-card-top">
+            <span class="kg-command-number">02 / PEOPLE</span>
+            <span class="kg-command-icon" aria-hidden="true">♧</span>
+          </div>
+          <div>
+            <h3>Agent Coordination</h3>
+            <p>Manage recruitment, approvals and assignments across your campaign network.</p>
+          </div>
+        </article>
 
-                <div class="kg-workflow-step">
-                    <span>02</span>
-                    <h3>Deploy your agents</h3>
-                    <p>Coordinate assignments across campaign stations.</p>
-                </div>
+        <article class="kg-command-card">
+          <div class="kg-command-card-top">
+            <span class="kg-command-number">03 / OPERATIONS</span>
+            <span class="kg-command-icon" aria-hidden="true">◈</span>
+          </div>
+          <div>
+            <h3>Election-Day Monitoring</h3>
+            <p>Follow check-ins, field reports and operational incidents in one place.</p>
+          </div>
+        </article>
 
-                <div class="kg-workflow-step">
-                    <span>03</span>
-                    <h3>Monitor election day</h3>
-                    <p>Track attendance, reports and field incidents.</p>
-                </div>
+        <article class="kg-command-card">
+          <div class="kg-command-card-top">
+            <span class="kg-command-number">04 / INTEGRITY</span>
+            <span class="kg-command-icon" aria-hidden="true">◇</span>
+          </div>
+          <div>
+            <h3>Results &amp; Verification</h3>
+            <p>Review submissions and maintain traceable verification and audit records.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
 
-                <div class="kg-workflow-step">
-                    <span>04</span>
-                    <h3>Verify the outcome</h3>
-                    <p>Review submissions and preserve audit history.</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="kg-audience-section">
-        <div class="kg-home-container kg-audience-grid">
-            <div>
-                <span class="kg-section-label">BUILT FOR CAMPAIGNS</span>
-                <h2>
-                    Your election network.
-                    <span>Your command centre.</span>
-                </h2>
-            </div>
+<section class="kg-journey" id="how-it-works">
+  <div class="kg-home-wrap">
+    <div class="kg-journey-intro">
+      <div>
+        <span class="kg-kicker">HOW IT WORKS</span>
+        <h2>From setup to<br><em>election day.</em></h2>
+      </div>
+      <p>Four clear steps to organize your campaign, coordinate field operations and review station reports.</p>
+    </div>
 
-            <div class="kg-audience-copy">
-                <p>
-                    Whether you are coordinating a parliamentary,
-                    county or ward-level campaign, KuraGuard is designed
-                    to give authorized teams structured visibility
-                    into field operations and reporting.
-                </p>
+    <div class="kg-journey-steps">
+      <article class="kg-journey-step">
+        <div class="kg-step-top"><span class="kg-step-icon">01</span><span class="kg-step-line"></span></div>
+        <h3>Set up your campaign</h3>
+        <p>Register and establish your authorized campaign workspace.</p>
+      </article>
 
-                <div class="kg-audience-tags">
-                    <span>Governor</span>
-                    <span>Senator</span>
-                    <span>Member of Parliament</span>
-                    <span>Member of County Assembly</span>
-                </div>
-            </div>
-        </div>
-    </section>
+      <article class="kg-journey-step">
+        <div class="kg-step-top"><span class="kg-step-icon">02</span><span class="kg-step-line"></span></div>
+        <h3>Build your network</h3>
+        <p>Recruit and assign agents across polling stations.</p>
+      </article>
 
-    <section class="kg-home-cta">
-        <div class="kg-home-container kg-cta-inner">
-            <div>
-                <span class="kg-section-label">TAKE COMMAND</span>
-                <h2>Make every polling station count.</h2>
-                <p>
-                    Bring your campaign's field operations into
-                    one coordinated election command centre.
-                </p>
-            </div>
+      <article class="kg-journey-step">
+        <div class="kg-step-top"><span class="kg-step-icon">03</span><span class="kg-step-line"></span></div>
+        <h3>Coordinate election day</h3>
+        <p>Monitor field reports and operational incidents.</p>
+      </article>
 
-            @auth
-                <a href="{{ route('campaign.landing') }}"
-                   class="kg-home-btn kg-home-btn-primary">
-                    Enter Workspace →
-                </a>
-            @else
-                <a href="{{ route('login') }}"
-                   class="kg-home-btn kg-home-btn-primary">
-                    Access Platform →
-                </a>
-            @endauth
-        </div>
-    </section>
+      <article class="kg-journey-step">
+        <div class="kg-step-top"><span class="kg-step-icon">04</span><span class="kg-step-line"></span></div>
+        <h3>Review every report</h3>
+        <p>Verify submissions and preserve an audit trail.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="kg-final-cta">
+  <div class="kg-home-wrap">
+    <div class="kg-final-panel">
+      <div class="kg-final-message">
+        <span class="kg-kicker">YOUR CAMPAIGN. YOUR COMMAND.</span>
+        <h2>Every polling station<br><em>matters.</em></h2>
+        <p>Give your campaign team the tools to organize, monitor and report with confidence.</p>
+      </div>
+
+      <div class="kg-final-actions">
+        @auth
+          <a class="kg-btn kg-btn-primary" href="{{ route('campaign.landing') }}">Enter Your Workspace ↗</a>
+        @else
+          <a class="kg-btn kg-btn-primary" href="{{ route('register') }}">Register as an Aspirant ↗</a>
+          <a class="kg-btn kg-btn-outline" href="{{ route('login') }}">Sign In →</a>
+        @endauth
+        <small>Built for independent campaign operations.</small>
+      </div>
+    </div>
+  </div>
+</section>
 
 </div>
+@push('scripts')<script src="{{ asset('js/kuraguard-home.js') }}?v=20261113b" defer></script>@endpush
 @endsection

@@ -442,13 +442,33 @@
 
     </style>
     <link rel="stylesheet" href="{{ asset('css/kuraguard-explorer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/kuraguard-explorer-photo.css') }}?v=20261114a">
     <link rel="stylesheet"
           href="{{ asset('css/kuraguard-simulator.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/kuraguard-civic-ticker.css') }}?v=20261114a">
+    <link rel="stylesheet" href="{{ asset('css/kuraguard-navigation-153.css') }}?v=20261114a">
+    <link rel="stylesheet" href="{{ asset('css/kuraguard-brand-157c.css') }}?v=20261114c">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=20261114c">
 </head>
 <body>
 
+<x-civic-ticker />
+
 <header>
-    <a href="/">KuraGuard</a>
+    <a href="{{ url('/') }}" class="kg-explorer-brand-157c" aria-label="KuraGuard homepage"><span class="kg-brand-157c">
+    <img
+        class="kg-brand-image-157c"
+        src="{{ asset('images/brand/kuraguard-logo-transparent.png') }}"
+        alt="KuraGuard"
+    >
+    <span class="kg-brand-tagline-157c">
+        Every Polling Station. Every Vote. Accounted For.
+    </span>
+</span></a>
+    <nav class="kg-explorer-nav" aria-label="Explorer navigation">
+        <a href="{{ url('/') }}">← Home</a>
+        <a href="{{ route('register') }}">Register as Aspirant ↗</a>
+    </nav>
 </header>
 
 <main>
