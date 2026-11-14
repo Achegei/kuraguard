@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('css/kuraguard-brand-157c.css') }}?v=20261114c">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=20261114c">
     <link rel="stylesheet" href="{{ asset('css/kuraguard-mobile-158b.css') }}?v=20261114b">
+    <link rel="stylesheet" href="{{ asset('css/kuraguard-mobile-160b.css') }}?v=20261114d">
 </head>
 <body class="kg-public">
         <x-civic-ticker />
